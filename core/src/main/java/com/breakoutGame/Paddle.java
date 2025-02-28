@@ -18,7 +18,7 @@ public class Paddle {
 
     public void update(){
         x = Gdx.input.getX()-(width/2);
-        y = Gdx.graphics.getHeight()-Gdx.input.getY();
+        //y = Gdx.graphics.getHeight()-Gdx.input.getY();
     }
 
     public void draw(ShapeRenderer shape){

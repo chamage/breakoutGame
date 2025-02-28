@@ -39,10 +39,7 @@ public class Ball {
 
     public void checkCollision(Paddle paddle){
         if (collidesWith(paddle)){
-            color = Color.GREEN;
-        }
-        else {
-            color = Color.WHITE;
+            ySpeed = -ySpeed;
         }
     }
 
