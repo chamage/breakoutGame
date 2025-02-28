@@ -48,7 +48,7 @@ public class Ball {
 
     private boolean collidesWith(Paddle paddle){
         //ballX + ballWidth > paddleX && ballX < paddleX+paddleWidth && ballY + ballHeight > paddleY
-        if (x + size >paddle.x && x < paddle.x + paddle.width && y + size > paddle.y && y < paddle.y + paddle.height) return true;
+        if (x + size > paddle.x && x - size < paddle.x + paddle.width && y + size > paddle.y && y - size < paddle.y + paddle.height) return true;
 
         return false;
     }
