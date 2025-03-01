@@ -18,17 +18,10 @@ public class GameScreen extends ApplicationAdapter {
 
     @Override
     public void create() {
-        int blockWidth = 63;
-        int blockHeight = 20;
         shape = new ShapeRenderer();
-        ball = new Ball(350, 50, 10, 9, 4);
+        ball = new Ball(350, 50, 6, 9, 4);
         paddle = new Paddle(50, 40, 150, 20);
-        for (int y = Gdx.graphics.getHeight()/2; y < Gdx.graphics.getHeight(); y += blockHeight + 10){
-            for (int x = 0; x < Gdx.graphics.getWidth(); x += blockWidth + 10){
-                blocks.add(new Block(x, y, blockWidth, blockHeight));
-            }
-        }
-
+        createBlocks();
     }
 
     @Override
@@ -52,5 +45,19 @@ public class GameScreen extends ApplicationAdapter {
         ball.draw(shape);
         paddle.draw(shape);
         shape.end();
+    }
+
+    private void createBlocks(){
+        Color[] colors = {Color.BLUE, Color.GREEN, Color.RED};
+        int blockWidth = 63;
+        int blockHeight = 20;
+        int rowIndex = 0;
+        for (int y = Gdx.graphics.getHeight()/2; y < Gdx.graphics.getHeight(); y += blockHeight + 10){
+            for (int x = 0; x < Gdx.graphics.getWidth(); x += blockWidth + 10){
+                Color color = colors[rowIndex % colors.length];
+                blocks.add(new Block(x, y, blockWidth, blockHeight, color));
+            }
+            rowIndex++;
+        }
     }
 }

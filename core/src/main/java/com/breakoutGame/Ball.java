@@ -51,13 +51,15 @@ public class Ball {
     }
 
     private boolean collidesWith(Paddle paddle){
-        //ballX + ballWidth > paddleX && ballX < paddleX+paddleWidth && ballY + ballHeight > paddleY
+        //collision with the paddle
         if (x + size > paddle.x && x - size < paddle.x + paddle.width && y + size > paddle.y && y - size < paddle.y + paddle.height) return true;
 
         return false;
 
-    }private boolean collidesWith(Block block){
-        //ballX + ballWidth > paddleX && ballX < paddleX+paddleWidth && ballY + ballHeight > paddleY
+    }
+
+    private boolean collidesWith(Block block){
+        //collision with the whole block
         if (x + size > block.x && x - size < block.x + block.width && y + size > block.y && y - size < block.y + block.height) return true;
 
         return false;

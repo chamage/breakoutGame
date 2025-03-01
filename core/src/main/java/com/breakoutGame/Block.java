@@ -9,13 +9,14 @@ public class Block {
     int width;
     int height;
     boolean destroyed;
-    Color color = Color.BLUE;
+    Color color;
 
-    public Block(int x, int y, int width, int height) {
+    public Block(int x, int y, int width, int height, Color color) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.color = color;
         destroyed = false;
     }
 

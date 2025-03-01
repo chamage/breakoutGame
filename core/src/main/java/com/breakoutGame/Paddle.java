@@ -9,7 +9,7 @@ public class Paddle {
     int y;
     int width;
     int height;
-    Color color = Color.RED;
+    Color color = Color.YELLOW;
 
     public Paddle(int x, int y, int width, int height){
         this.x = x;
