@@ -3,6 +3,8 @@ package com.breakoutGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Ball {
     int x;
@@ -11,6 +13,7 @@ public class Ball {
     int xSpeed;
     int ySpeed;
     Color color = Color.WHITE;
+    //Rectangle colBox;
 
     public Ball(int x, int y, int size, int xSpeed, int ySpeed){
         this.x = x;
@@ -18,6 +21,7 @@ public class Ball {
         this.size = size;
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
+        //colBox = new Rectangle();
     }
 
     public void update(){
@@ -35,6 +39,7 @@ public class Ball {
     public void draw(ShapeRenderer shape){
         shape.setColor(color);
         shape.circle(x, y, size);
+        //colBox.set(x-size, y-size, size*2, size*2);
     }
 
     public void checkCollision(Paddle paddle){
@@ -53,7 +58,7 @@ public class Ball {
     private boolean collidesWith(Paddle paddle){
         //collision with the paddle
         if (x + size > paddle.x && x - size < paddle.x + paddle.width && y + size > paddle.y && y - size < paddle.y + paddle.height) return true;
-
+        //if (paddle.colBox.overlaps(colBox)) return true;
         return false;
 
     }

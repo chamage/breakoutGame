@@ -45,6 +45,7 @@ public class GameScreen extends ApplicationAdapter {
         ball.draw(shape);
         paddle.draw(shape);
         shape.end();
+        endGame();
     }
 
     private void createBlocks(){
@@ -58,6 +59,12 @@ public class GameScreen extends ApplicationAdapter {
                 blocks.add(new Block(x, y, blockWidth, blockHeight, color));
             }
             rowIndex++;
+        }
+    }
+
+    private void endGame(){
+        if (blocks.isEmpty()){
+            Gdx.app.exit();
         }
     }
 }
