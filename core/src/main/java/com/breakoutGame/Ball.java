@@ -3,7 +3,6 @@ package com.breakoutGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Ball {
@@ -13,7 +12,7 @@ public class Ball {
     int xSpeed;
     int ySpeed;
     Color color = Color.WHITE;
-    //Rectangle colBox;
+    Rectangle colBox;
 
     public Ball(int x, int y, int size, int xSpeed, int ySpeed){
         this.x = x;
@@ -21,7 +20,7 @@ public class Ball {
         this.size = size;
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
-        //colBox = new Rectangle();
+        colBox = new Rectangle();
     }
 
     public void update(){
@@ -57,17 +56,14 @@ public class Ball {
 
     private boolean collidesWith(Paddle paddle){
         //collision with the paddle
-        if (x + size > paddle.x && x - size < paddle.x + paddle.width && y + size > paddle.y && y - size < paddle.y + paddle.height) return true;
+        return x + size > paddle.x && x - size < paddle.x + paddle.width && y + size > paddle.y && y - size < paddle.y + paddle.height;
         //if (paddle.colBox.overlaps(colBox)) return true;
-        return false;
 
     }
 
     private boolean collidesWith(Block block){
         //collision with the whole block
-        if (x + size > block.x && x - size < block.x + block.width && y + size > block.y && y - size < block.y + block.height) return true;
-
-        return false;
+        return x + size > block.x && x - size < block.x + block.width && y + size > block.y && y - size < block.y + block.height;
     }
 
 }

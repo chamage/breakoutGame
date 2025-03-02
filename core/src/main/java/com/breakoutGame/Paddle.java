@@ -11,14 +11,14 @@ public class Paddle {
     int width;
     int height;
     Color color = Color.YELLOW;
-    //Rectangle colBox;
+    Rectangle colBox;
 
     public Paddle(int x, int y, int width, int height){
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        //colBox = new Rectangle();
+        colBox = new Rectangle();
     }
 
     public void update(){
