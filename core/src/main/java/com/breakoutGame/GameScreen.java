@@ -26,7 +26,7 @@ public class GameScreen extends ApplicationAdapter {
     public void render() {
         ScreenUtils.clear(Color.BLACK);
         ball.update();
-        ball.outOfBounds();
+        ball.outOfBoundsFix();
         paddle.update();
         ball.checkCollision(paddle);
         shape.begin(ShapeRenderer.ShapeType.Filled);
@@ -44,21 +44,39 @@ public class GameScreen extends ApplicationAdapter {
         ball.draw(shape);
         paddle.draw(shape);
         shape.end();
+        loseCondition();
         endGame();
     }
 
     private void createBlocks(){
         Color[] colors = {Color.BLUE, Color.GREEN, Color.RED};
-        int blockWidth = 63;
+        int blockWidth = 60;
         int blockHeight = 20;
         int rowIndex = 0;
         for (int y = Gdx.graphics.getHeight()/2; y < Gdx.graphics.getHeight(); y += blockHeight + 10){
-            for (int x = 0; x < Gdx.graphics.getWidth(); x += blockWidth + 10){
+            for (int x = 4; x < Gdx.graphics.getWidth(); x += blockWidth + 7){
                 Color color = colors[rowIndex % colors.length];
                 blocks.add(new Block(x, y, blockWidth, blockHeight, color));
+                rowIndex++;
             }
-            rowIndex++;
         }
+    }
+
+    private  void loseCondition(){
+        if (ball.y < paddle.y){
+            restart();
+        }
+    }
+
+    private void restart(){
+        for (Block block : blocks){
+            block.destroyed = true;
+        }
+        blocks.clear();
+
+        ball.y = paddle.y + paddle.height * 2 + 10;
+        ball.ySpeed = Math.abs(ball.ySpeed);
+        createBlocks();
     }
 
     private void endGame(){

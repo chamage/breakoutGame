@@ -78,7 +78,7 @@ public class Ball {
         return x + size > block.x && x - size < block.x + block.width && y + size > block.y && y - size < block.y + block.height;
     }
 
-    public void outOfBounds(){
+    public void outOfBoundsFix(){
         if (x - size < 0) {
             x = size; // reposition inside
             xSpeed = Math.abs(xSpeed); // bounce right
