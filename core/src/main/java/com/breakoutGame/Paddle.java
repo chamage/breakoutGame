@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Paddle {
-    int x;
-    int y;
-    int width;
-    int height;
+    float x;
+    float y;
+    float width;
+    float height;
     Color color = Color.YELLOW;
     Rectangle colBox;
 
@@ -22,13 +22,15 @@ public class Paddle {
     }
 
     public void update(){
-        x = Gdx.input.getX()-(width/2);
+        if (Gdx.input.getX() > width/2 && Gdx.input.getX() < Gdx.graphics.getWidth() - width/2) {
+            x = Gdx.input.getX()-(width/2);
+        }
         //y = Gdx.graphics.getHeight()-Gdx.input.getY();
     }
 
     public void draw(ShapeRenderer shape){
         shape.setColor(color);
         shape.rect(x, y, width, height);
-        //colBox.set(x, y, width, height);
+        colBox.set(x, y, width, height);
     }
 }

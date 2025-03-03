@@ -2,14 +2,16 @@ package com.breakoutGame;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Block {
-    int x;
-    int y;
-    int width;
-    int height;
+    float x;
+    float y;
+    float width;
+    float height;
     boolean destroyed;
     Color color;
+    Rectangle colBox;
 
     public Block(int x, int y, int width, int height, Color color) {
         this.x = x;
@@ -18,10 +20,12 @@ public class Block {
         this.height = height;
         this.color = color;
         destroyed = false;
+        colBox = new Rectangle();
     }
 
     public void draw(ShapeRenderer shape){
         shape.setColor(color);
         shape.rect(x, y, width, height);
+        colBox.set(x, y, width, height);
     }
 }

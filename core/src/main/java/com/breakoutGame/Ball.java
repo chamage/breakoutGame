@@ -3,14 +3,15 @@ package com.breakoutGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Ball {
-    int x;
-    int y;
-    int size;
-    int xSpeed;
-    int ySpeed;
+    float x;
+    float y;
+    float size;
+    float xSpeed;
+    float ySpeed;
     Color color = Color.WHITE;
     Rectangle colBox;
 
@@ -38,13 +39,24 @@ public class Ball {
     public void draw(ShapeRenderer shape){
         shape.setColor(color);
         shape.circle(x, y, size);
-        //colBox.set(x-size, y-size, size*2, size*2);
+        colBox.set(x-size, y-size, size*2, size*2);
     }
 
     public void checkCollision(Paddle paddle){
-        if (collidesWith(paddle)){
-            ySpeed = -ySpeed;
+
+        if (colBox.overlaps(paddle.colBox) && ySpeed < 0) {
+            float hitPoint = (x - (paddle.x + paddle.width / 2)) / (paddle.width / 2);
+            hitPoint = MathUtils.clamp(hitPoint, -1f, 1f);
+
+            float speed = (float) Math.sqrt(xSpeed * xSpeed + ySpeed * ySpeed);
+            float angle = hitPoint * 40f;
+
+            xSpeed = speed * MathUtils.sinDeg(angle);
+            ySpeed = speed * MathUtils.cosDeg(angle);
+
+            ySpeed = Math.abs(ySpeed);
         }
+
     }
 
     public void checkCollision(Block block){
@@ -64,6 +76,16 @@ public class Ball {
     private boolean collidesWith(Block block){
         //collision with the whole block
         return x + size > block.x && x - size < block.x + block.width && y + size > block.y && y - size < block.y + block.height;
+    }
+
+    public void outOfBounds(){
+        if (x - size < 0) {
+            x = size; // reposition inside
+            xSpeed = Math.abs(xSpeed); // bounce right
+        } else if (x + size > Gdx.graphics.getWidth()) {
+            x = Gdx.graphics.getWidth() - size; // reposition inside
+            xSpeed = -Math.abs(xSpeed); // bounce left
+        }
     }
 
 }

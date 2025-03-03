@@ -26,6 +26,7 @@ public class GameScreen extends ApplicationAdapter {
     public void render() {
         ScreenUtils.clear(Color.BLACK);
         ball.update();
+        ball.outOfBounds();
         paddle.update();
         ball.checkCollision(paddle);
         shape.begin(ShapeRenderer.ShapeType.Filled);
