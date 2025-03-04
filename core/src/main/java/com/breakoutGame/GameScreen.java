@@ -1,21 +1,27 @@
 package com.breakoutGame;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
-public class GameScreen extends ApplicationAdapter {
+public class GameScreen implements Screen {
+
+    final BreakoutGame game;
     ShapeRenderer shape;
     Ball ball;
     Paddle paddle;
     ArrayList<Block> blocks = new ArrayList<>();
 
+    public GameScreen(final BreakoutGame game){
+        this.game = game;
+    }
+
     @Override
-    public void create() {
+    public void show() {
         shape = new ShapeRenderer();
         ball = new Ball(350, 50, 6, 9, 4);
         paddle = new Paddle(50, 40, 150, 20);
@@ -23,7 +29,7 @@ public class GameScreen extends ApplicationAdapter {
     }
 
     @Override
-    public void render() {
+    public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
         ball.update();
         ball.outOfBoundsFix();
@@ -46,6 +52,31 @@ public class GameScreen extends ApplicationAdapter {
         shape.end();
         loseCondition();
         endGame();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+        shape.dispose();
     }
 
     private void createBlocks(){

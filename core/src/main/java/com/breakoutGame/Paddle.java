@@ -13,7 +13,7 @@ public class Paddle {
     Color color = Color.YELLOW;
     Rectangle colBox;
 
-    public Paddle(int x, int y, int width, int height){
+    public Paddle(float x, float y, float width, float height){
         this.x = x;
         this.y = y;
         this.width = width;

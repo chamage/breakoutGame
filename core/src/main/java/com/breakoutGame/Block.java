@@ -13,7 +13,7 @@ public class Block {
     Color color;
     Rectangle colBox;
 
-    public Block(int x, int y, int width, int height, Color color) {
+    public Block(float x, float y, float width, float height, Color color) {
         this.x = x;
         this.y = y;
         this.width = width;

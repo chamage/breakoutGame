@@ -15,7 +15,7 @@ public class Ball {
     Color color = Color.WHITE;
     Rectangle colBox;
 
-    public Ball(int x, int y, int size, int xSpeed, int ySpeed){
+    public Ball(float x, float y, float size, float xSpeed, float ySpeed){
         this.x = x;
         this.y = y;
         this.size = size;
