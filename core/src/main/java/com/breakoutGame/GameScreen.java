@@ -14,9 +14,12 @@ public class GameScreen implements Screen {
 
     final BreakoutGame game;
     ShapeRenderer shape;
+    SpriteBatch batch;
     Ball ball;
     Paddle paddle;
     ArrayList<Block> blocks = new ArrayList<>();
+
+    Texture[] blockTextures;
 
     public GameScreen(final BreakoutGame game){
         this.game = game;
@@ -25,23 +28,39 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         shape = new ShapeRenderer();
+        batch = new SpriteBatch();
         ball = new Ball(350, 50, 6, 9, 4);
         paddle = new Paddle(50, 40, 150, 20);
+
+        blockTextures = new Texture[3];
+        blockTextures[0] = new Texture(Gdx.files.internal("textures/blueBlock.png"));
+        blockTextures[1] = new Texture(Gdx.files.internal("textures/greenBlock.png"));
+        blockTextures[2] = new Texture(Gdx.files.internal("textures/redBlock.png"));
+
         createBlocks();
     }
 
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
+
         ball.update();
         ball.outOfBoundsFix();
         paddle.update();
         ball.checkCollision(paddle);
-        shape.begin(ShapeRenderer.ShapeType.Filled);
+
+        batch.begin();
         for (Block block : blocks){
-            block.draw(shape);
+            block.draw(batch);
             ball.checkCollision(block);
         }
+        batch.end();
+
+        shape.begin(ShapeRenderer.ShapeType.Filled);
+        ball.draw(shape);
+        paddle.draw(shape);
+        shape.end();
+
         for (int i = 0; i < blocks.size(); i++){
             Block block = blocks.get(i);
             if (block.destroyed){
@@ -49,9 +68,7 @@ public class GameScreen implements Screen {
                 i--;
             }
         }
-        ball.draw(shape);
-        paddle.draw(shape);
-        shape.end();
+
         loseCondition();
         endGame();
     }
@@ -79,17 +96,22 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         shape.dispose();
+        batch.dispose();
+        for(Texture txt : blockTextures){
+            txt.dispose();
+        }
     }
 
     private void createBlocks(){
-        Color[] colors = {Color.BLUE, Color.GREEN, Color.RED};
+        //Color[] colors = {Color.BLUE, Color.GREEN, Color.RED};
         int blockWidth = 60;
         int blockHeight = 20;
         int rowIndex = 0;
         for (int y = Gdx.graphics.getHeight()/2; y < Gdx.graphics.getHeight(); y += blockHeight + 7){
             for (int x = 4; x < Gdx.graphics.getWidth(); x += blockWidth + 7){
-                Color color = colors[rowIndex % colors.length];
-                blocks.add(new Block(x, y, blockWidth, blockHeight, color));
+                //Color color = colors[rowIndex % colors.length];
+                Texture texture = blockTextures[rowIndex % blockTextures.length];
+                blocks.add(new Block(x, y, blockWidth, blockHeight, texture));
                 rowIndex++;
             }
         }

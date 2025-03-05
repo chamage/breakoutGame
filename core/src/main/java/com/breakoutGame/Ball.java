@@ -3,6 +3,8 @@ package com.breakoutGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -14,6 +16,7 @@ public class Ball {
     float ySpeed;
     Color color = Color.WHITE;
     Rectangle colBox;
+    Circle colCir;
 
     public Ball(float x, float y, float size, float xSpeed, float ySpeed){
         this.x = x;
@@ -22,6 +25,7 @@ public class Ball {
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
         colBox = new Rectangle();
+        colCir = new Circle();
     }
 
     public void update(){
@@ -40,11 +44,12 @@ public class Ball {
         shape.setColor(color);
         shape.circle(x, y, size);
         colBox.set(x-size, y-size, size*2, size*2);
+        colCir.set(x, y, size);
     }
 
     public void checkCollision(Paddle paddle){
 
-        if (colBox.overlaps(paddle.colBox) && ySpeed < 0) {
+        if (collidesWith(paddle)) {
             float hitPoint = (x - (paddle.x + paddle.width / 2)) / (paddle.width / 2);
             hitPoint = MathUtils.clamp(hitPoint, -1f, 1f);
 
@@ -68,14 +73,14 @@ public class Ball {
 
     private boolean collidesWith(Paddle paddle){
         //collision with the paddle
-        return x + size > paddle.x && x - size < paddle.x + paddle.width && y + size > paddle.y && y - size < paddle.y + paddle.height;
-        //if (paddle.colBox.overlaps(colBox)) return true;
-
+        //return x + size > paddle.x && x - size < paddle.x + paddle.width && y + size > paddle.y && y - size < paddle.y + paddle.height;
+        return Intersector.overlaps(colCir, paddle.colBox);
     }
 
     private boolean collidesWith(Block block){
         //collision with the whole block
-        return x + size > block.x && x - size < block.x + block.width && y + size > block.y && y - size < block.y + block.height;
+        //return x + size > block.x && x - size < block.x + block.width && y + size > block.y && y - size < block.y + block.height;
+        return Intersector.overlaps(colCir, block.colBox);
     }
 
     public void outOfBoundsFix(){
