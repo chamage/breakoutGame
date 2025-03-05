@@ -3,6 +3,8 @@ package com.breakoutGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -84,7 +86,7 @@ public class GameScreen implements Screen {
         int blockWidth = 60;
         int blockHeight = 20;
         int rowIndex = 0;
-        for (int y = Gdx.graphics.getHeight()/2; y < Gdx.graphics.getHeight(); y += blockHeight + 10){
+        for (int y = Gdx.graphics.getHeight()/2; y < Gdx.graphics.getHeight(); y += blockHeight + 7){
             for (int x = 4; x < Gdx.graphics.getWidth(); x += blockWidth + 7){
                 Color color = colors[rowIndex % colors.length];
                 blocks.add(new Block(x, y, blockWidth, blockHeight, color));
@@ -95,7 +97,9 @@ public class GameScreen implements Screen {
 
     private  void loseCondition(){
         if (ball.y < paddle.y){
-            restart();
+            //restart();
+            game.setScreen(new GameLost(game));
+            dispose();
         }
     }
 
@@ -112,7 +116,9 @@ public class GameScreen implements Screen {
 
     private void endGame(){
         if (blocks.isEmpty()){
-            Gdx.app.exit();
+            //Gdx.app.exit();
+            game.setScreen(new GameWon(game));
+            dispose();
         }
     }
 }
